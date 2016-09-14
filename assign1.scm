@@ -97,8 +97,25 @@
       )
    )
 
-(define (curry a b c d)
-   
+(define (curry f a)
+   (f a )
+   )
+
+(define (zorp i f) 
+   (define (zorp-iter count z1 z2 z3)
+      (if (= (- i 2) count) z3 
+         (zorp-iter (+ count 1) z2 z3 (+ z3 (/ (* (- z3 z2) (- z3 z2)) (+ z1 z3 (* -2 z2)))))
+         )
+      )
+   (if (< i 3) (f i)
+      (zorp-iter 0 (f 0) (f 1) (f 2))
+      )
+   )
+
+(define (zorp-iter count z1 z2 z3)
+   (if (= i count) z3 
+      (zorp-iter (+ count 1) z2 z3 (+ z3 (/ (* (- z3 z2) (- z3 z2)) (+ z1 z3 (* -2 z2)))))
+      )
    )
 
 (define (run1) 
@@ -134,14 +151,15 @@
    (exprTest (bico 4 3) 4)
    )
 
-(define (run6) 
+;(define (run6) 
    
-   )
-
-(define (zorp i f))
+;   )
 
 (define (run7) 
-   
+   (exprTest (zorp 0 (lambda (n) (+ (^ n 3) (^ n 2) n))) 0)
+   (exprTest (zorp 2 (lambda (n) (+ (^ n 3) (^ n 2) n))) 14)
+   (exprTest (zorp 3 (lambda (n) (+ (^ n 3) (^ n 2) n))) 29)
+   (exprTest (zorp 4 (lambda (n) (+ (^ n 3) (^ n 2) n))) 85)
    )
 
 (define (egypt/ divisor dividend)
