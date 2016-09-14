@@ -57,8 +57,39 @@
    (exprTest (min5 0 3 4 5 -1) -1)
    (exprTest (min5 10000 20000 30000 0 5999) 0))
 
+(define pi 3.14159)
+
+(define (cym val)
+   ; calls cyan, yellow, magenta then returns their values as string with #
+   (string+ "#" ); add hex calls
+   (println (hex (cyan val)) (hex (yellow val)) (hex (magenta val)))
+   )
+
+(define (cyan val)
+   ; unModVal = cos((val*200/pi))
+   ; return unModVal *255
+   (int (* 255 (cos (/ (* (real val) pi) 200))))
+   )
+
+(define (yellow val)
+   ; unModVal = -sin(x) + 1
+   (int (* 255 (+ 1 (* -1 (sin (real val))))))
+   )
+
+(define (magenta val)
+   ; unModVal = cos(x) + 1 
+   (int (/ (* 255 (+ 1 (cos (real val)))) 2))
+   )
+
+(define (hex function)
+   ; this function calls cyan, yellow, or magenta and then converts the return value to hex
+   ; and returns a 2 digit string of that hex
+   (string+ (fmt "%-2d" function))
+   )
+
 (define (run3) 
-   (exprTest () "still ignore") 
+   (exprTest (cym 0) "#000000")
+   (exprTest (cym 100) "#FFFFFF") 
    )
 
 (define (run4) 
@@ -66,25 +97,41 @@
    (exprTest (root5 243) 3)
    )
 
+(define (bico i j))
+
 (define (run5) 
-   
+   (exprTest (bico 4 2) 6)
    )
+
+(define (curry a b c d))
 
 (define (run6) 
    
    )
 
+(define (zorp i f))
+
 (define (run7) 
    
+   )
+
+(define (egypt/ divisor dividend)
+   ; takes two arguments and returns quotient. iterative process. no multiplication or division
+   ; hint: define double and halve which dont use banned operators. halve must run sub-linear
    )
 
 (define (run8) 
    
    )
 
+;(define (mystery numTerms augend (genNum n) (genDenom n)))
+
 (define (run9) 
-   
+   (exprTest (mystery 3 2 (lambda (n) 1) (labmda (n) n)) "no clue")
    )
+
+(define (ramanujan depth))
+(define (iramanujan depth))
 
 (define (run10) 
    
