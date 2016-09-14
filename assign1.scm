@@ -118,6 +118,41 @@
       )
    )
 
+(define (egypt/ dividend divisor)
+   ; takes two arguments and returns quotient. iterative process. no multiplication or division
+   ; hint: define double and halve which dont use banned operators. halve must run sub-linear
+   (egypt/iter1 1 divisor dividend)
+   
+   
+   )
+
+(define (egypt/iter1 a b c)
+   (if(> b c) (egypt/iter2 a b c 0)
+      (egypt/iter1 (double a) (double b) c)
+      )
+   )
+
+(define (egypt/iter2 a b c d)
+   (if (< a 1) d)
+   (if (<= b c) (egypt/iter2 (halve a) (halve b) (- c b) (+ d a)) 
+         (egypt/iter2 (halve a) (halve b) c d)
+      )
+   )
+
+(define (halve a)
+   (if (= a 1) 0
+   (doubleForHalve 1 a))
+   )
+
+(define (doubleForHalve a b)
+   (if (= (double a) b) a (doubleForHalve (double a) b)
+      )
+   )
+
+(define (double a)
+      (+ a a)
+   )
+
 (define (run1) 
    (println "And and my-and behave differently when using the function to check")
    ; whether a variable is 0 before using it to divide. For example, 
@@ -162,11 +197,6 @@
    (exprTest (zorp 4 (lambda (n) (+ (^ n 3) (^ n 2) n))) 85)
    )
 
-(define (egypt/ divisor dividend)
-   ; takes two arguments and returns quotient. iterative process. no multiplication or division
-   ; hint: define double and halve which dont use banned operators. halve must run sub-linear
-   )
-
 (define (run8) 
    
    )
@@ -189,7 +219,7 @@
 ;(run2)
 ;(run3)
 ;(run4)
-(run5)
+;(run5)
 ;(run6)
 ;(run7)
 ;(run8)
