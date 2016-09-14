@@ -56,12 +56,17 @@
 
 (define (yellow val)
    ; unModVal = -sin(x) + 1
-   (int (* 255 (+ 1 (* -1 (sin (/ (* (real val) pi) 100))))))
+   (int (* 255 (+ 1 (* -1 (sin (* pi .01 val))))))
    )
 
 (define (magenta val)
    ; unModVal = cos(x) + 1 
    (int (/ (* 255 (+ 1 (cos (/ (* 3 pi (real val)) 200)))) 2))
+   )
+
+(define (run3) 
+   (exprTest (cym 0) "#FFFFFF")
+   (exprTest (cym 100) "#00FF7F") 
    )
 
 (define hexConv "0123456789ABCDEF")
@@ -122,36 +127,57 @@
    ; takes two arguments and returns quotient. iterative process. no multiplication or division
    ; hint: define double and halve which dont use banned operators. halve must run sub-linear
    (egypt/iter1 1 divisor dividend)
-   
-   
    )
 
 (define (egypt/iter1 a b c)
+;   (inspect a)
+;   (inspect b)
+;   (inspect c)
    (if(> b c) (egypt/iter2 a b c 0)
       (egypt/iter1 (double a) (double b) c)
       )
    )
 
 (define (egypt/iter2 a b c d)
-   (if (< a 1) d)
+;   (inspect a)
+;   (inspect b)
+;   (inspect c)
+;   (inspect d)
+;   (pause)
+   (if (< a 1) d
    (if (<= b c) (egypt/iter2 (halve a) (halve b) (- c b) (+ d a)) 
          (egypt/iter2 (halve a) (halve b) c d)
       )
-   )
+   ))
 
+; halve function is broken. recursion doesn't work, no eligible base case??
 (define (halve a)
-   (if (= a 1) 0
-   (doubleForHalve 1 a))
+;   (doubleForHalve 1 a 1)
+   (/ a 2)
    )
 
-(define (doubleForHalve a b)
-   (if (= (double a) b) a (doubleForHalve (double a) b)
-      )
+(define (doubleForHalve a b sink)
+   (inspect a)
+   (inspect b)
+   (inspect sink)
+   (pause)
+   (cond 
+      ((= b 0) sink)
+      ((> (double a) b) (doubleForHalve 1 (- b a) sink)
+      (else (doubleForHalve (double a) b (double sink)))
+      ))
    )
 
 (define (double a)
       (+ a a)
    )
+
+(define (mystery numTerms augend num den)
+   (define (mystery-iter counter numTerms item)
+      (if (= counter numTerms) item (mystery-iter (+ 1 counter) numTerms 
+                (+ counter (/ (num) (den))
+      )
+   ))))
 
 (define (run1) 
    (println "And and my-and behave differently when using the function to check")
@@ -198,7 +224,7 @@
    )
 
 (define (run8) 
-   
+   (exprTest (egypt/ 1960 56) 35)
    )
 
 ;(define (mystery numTerms augend (genNum n) (genDenom n)))
@@ -217,12 +243,12 @@
 ;(author)
 ;(run1)
 ;(run2)
-;(run3)
+(run3)
 ;(run4)
 ;(run5)
 ;(run6)
 ;(run7)
-;(run8)
+(run8)
 ;(run9)
 ;(run10)
 
