@@ -13,6 +13,7 @@
       )
    )
 
+; what if you used an outer cond to decide between e or 
 (define (min5 a b c d e)
    (if (< e 
           (if (< (if (< a b) a b) 
@@ -28,6 +29,50 @@
       )
    )
 
+(define (min5 a b c d e)
+   (if (< e a b c d) e 
+       (if (< (if (< a b) a b) 
+              (if (< c d) c d)) 
+           (if (< a b) a b) 
+           (if (< c d) c d)
+          )
+      )
+   )
+
+
+
+(define pi 3.141592653589793238462643383279502884197169)
+
+(define (cym val)
+   ; calls cyan, yellow, magenta then returns their values as string with #
+   (string+ "#" (hex (cyan val)) (hex (yellow val)) (hex (magenta val))); add hex calls
+   )
+
+(define (cyan val)
+   ; unModVal = cos((val*200/pi))
+   ; return unModVal *255
+   (int (* 255 (cos (/ (* (real val) pi) 200))))
+   )
+
+(define (yellow val)
+   ; unModVal = -sin(x) + 1
+   (int (* 255 (+ 1 (* -1 (sin (/ (* (real val) pi) 100))))))
+   )
+
+(define (magenta val)
+   ; unModVal = cos(x) + 1 
+   (int (/ (* 255 (+ 1 (cos (/ (* 3 pi (real val)) 200)))) 2))
+   )
+
+(define hexConv "0123456789ABCDEF")
+
+(define (hex function)
+   ; this function calls cyan, yellow, or magenta and then converts the return value to hex
+   ; and returns a 2 digit string of that hex
+   (string+ (getElement hexConv (int (/ function 16))) 
+            (getElement hexConv (int (% function 16))))
+   )
+
 (define (root5 radicand)
    (define (sqrt-iter guess x)
       (if (good-enough? guess x)
@@ -39,6 +84,21 @@
    (define (Good-enough? guess x)
       (< (abs (- (square guess) x)) 0.001))
    (define (sqrt x) (sqrt-iter 1.0 x))
+   )
+
+; this is pascals triangle
+(define (bico i j)
+   (cond
+      ((= i 1) 1)
+      ((= j 0) 1)
+      ((= j i) 1)
+      (else (+ (bico (- i 1) j )
+               (bico (- i 1) (- j 1))))
+      )
+   )
+
+(define (curry a b c d)
+   
    )
 
 (define (run1) 
@@ -57,39 +117,9 @@
    (exprTest (min5 0 3 4 5 -1) -1)
    (exprTest (min5 10000 20000 30000 0 5999) 0))
 
-(define pi 3.14159)
-
-(define (cym val)
-   ; calls cyan, yellow, magenta then returns their values as string with #
-   (string+ "#" ); add hex calls
-   (println (hex (cyan val)) (hex (yellow val)) (hex (magenta val)))
-   )
-
-(define (cyan val)
-   ; unModVal = cos((val*200/pi))
-   ; return unModVal *255
-   (int (* 255 (cos (/ (* (real val) pi) 200))))
-   )
-
-(define (yellow val)
-   ; unModVal = -sin(x) + 1
-   (int (* 255 (+ 1 (* -1 (sin (real val))))))
-   )
-
-(define (magenta val)
-   ; unModVal = cos(x) + 1 
-   (int (/ (* 255 (+ 1 (cos (real val)))) 2))
-   )
-
-(define (hex function)
-   ; this function calls cyan, yellow, or magenta and then converts the return value to hex
-   ; and returns a 2 digit string of that hex
-   (string+ (fmt "%-2d" function))
-   )
-
 (define (run3) 
-   (exprTest (cym 0) "#000000")
-   (exprTest (cym 100) "#FFFFFF") 
+   (exprTest (cym 0) "#FFFFFF")
+   (exprTest (cym 100) "#00FF7F") 
    )
 
 (define (run4) 
@@ -97,13 +127,12 @@
    (exprTest (root5 243) 3)
    )
 
-(define (bico i j))
-
 (define (run5) 
    (exprTest (bico 4 2) 6)
+   (exprTest (bico 5 2) 10)
+   (exprTest (bico 2 2) 1)
+   (exprTest (bico 4 3) 4)
    )
-
-(define (curry a b c d))
 
 (define (run6) 
    
@@ -137,10 +166,17 @@
    
    )
 
-(author)
-(run1)
-(run2)
-(run3)
+;(author)
+;(run1)
+;(run2)
+;(run3)
+;(run4)
+(run5)
+;(run6)
+;(run7)
+;(run8)
+;(run9)
+;(run10)
 
 
 (println "assignment 1 loaded!")
