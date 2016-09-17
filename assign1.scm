@@ -79,18 +79,27 @@
    )
 
 (define (root5 radicand)
-   (define (sqrt-iter guess x)
-      (if (good-enough? guess x)
-          guess
-          (sqrt-iter (imrpove guess x)x)))
-   (define (improve guess x) 
-      (average guess (/ x guess)))
-   (define (average x y) (/ (+ x y) 2))
-   (define (Good-enough? guess x)
-      (< (abs (- (square guess) x)) 0.001))
-   (define (sqrt x) (sqrt-iter 1.0 x))
+   (root5-iter 1 radicand)
    )
 
+(define (root5-iter guess x)
+   (if (good-enough? guess x)
+       guess
+       (root5-iter (improve guess x) x)))
+
+(define (improve guess x) 
+   (average (* 4 guess) (/ x (toTheFourth guess))))
+
+(define (toTheFourth x)
+   (* x x x x))
+
+(define (average x y) (/ (+ x y) 5))
+
+(define (good-enough? guess x)
+   (< (abs (- (* guess guess guess guess guess) x)) 0.001))
+
+(define (square x) (* x x))
+ 
 ; this is pascals triangle
 (define (bico i j)
    (cond
@@ -239,6 +248,7 @@
 
 (define (run9) 
    (exprTest (mystery 1000 2 (lambda (n) 1) (lambda (n) n)) 2.6977746580)
+   (println "The mysterious number z is 1.6487212707, or the square root of e")
    )
 
 (define (ramanujan depth))
