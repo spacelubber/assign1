@@ -15,30 +15,8 @@
 
 ; what if you used an outer cond to decide between e or 
 (define (min5 a b c d e)
-   (if (< e 
-          (if (< (if (< a b) a b) 
-                 (if (< c d) c d))
-              (if (< a b) a b)
-              (if (< c d) c d)))
-       e 
-       (if (< (if (< a b) a b) 
-              (if (< c d) c d)) 
-           (if (< a b) a b) 
-           (if (< c d) c d)
-          )
-      )
-   )
-
-(define (min5 a b c d e)
-   (if (< e a b c d) e 
-       (if (< (if (< a b) a b) 
-              (if (< c d) c d)) 
-           (if (< a b) a b) 
-           (if (< c d) c d)
-          )
-      )
-   )
-
+   (define (f x y) (if (< x y) x y))
+   (f (f (f a b) (f c d)) e))
 
 
 (define pi 3.141592653589793238462643383279502884197169)
@@ -195,14 +173,9 @@
 
 
 (define (run1) 
-   (println "And and my-and behave differently when using the function to check")
-   ; whether a variable is 0 before using it to divide. For example, 
-   ; when and is given (if (= a 0) #f #t) before (< a (/ x a))), the result is #f
-   ; whereas when the same parameters are given to my-and, the return is 
-   ; <exception mathException> instead. This is because and is a special form that has
-   ; a definite order in which it resolves its parameters (from leftmost to rightmost)
-   ; whereas since my-and is simply a function, there is not rule governing which parameter
-   ; will be resolved first
+   (println 
+"And and my-and behave differently when using the function to check
+if a divisor is 0 before attempting to divide by 0. For example, when using and,listing (if (= a 0) #f #t) before (< a (/ x a)) yields the result #f whereas using my-and yield a mathException. This is because the and function is a special form that resolves its arguments in a definite order. my-and is a regularly defined function, and regular functions do not have a rule guiding the order of their parameter resolution")
    )
  
 (define (run2)
