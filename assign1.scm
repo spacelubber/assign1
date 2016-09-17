@@ -225,10 +225,19 @@ if a divisor is 0 before attempting to divide by 0. For example, when using and,
    )
 
 (define (ramanujan depth))
-(define (iramanujan depth))
+
+(define (iramanujan depth)
+   (r-iter 0 depth 0)
+   )
+
+(define (r-iter c d term)
+   (if (> c d) term
+      (* (+ c 1) (sqrt (+ c 6 (r-iter (+ c 1) d term))))))
 
 (define (run10) 
-   
+   (exprTest (iramanujan 1000) 4.00)
+   (exprTest (iramanujan 0) 2.449)
+   (println "The infinite series converges to the value of 4. Any depth larger than 40 is close enough to the value of 4 that the output is simply 4")
    )
 
 ;(author)
