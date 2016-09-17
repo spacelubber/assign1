@@ -103,7 +103,10 @@
    )
 
 (define (curry f a)
-   (f a )
+   (define (lambda b)
+      (define (lambda c)
+         (define (lambda d)
+            (f a b c d))))
    )
 
 (define (zorp i f) 
@@ -172,12 +175,15 @@
       (+ a a)
    )
 
-(define (mystery numTerms augend num den)
-   (define (mystery-iter counter numTerms item)
-      (if (= counter numTerms) item (mystery-iter (+ 1 counter) numTerms 
-                (+ counter (/ (num) (den))
-      )
-   ))))
+(define (mys-iter counter countTo firstFunc secFunc)
+   (if (= counter countTo) (real (/ (secFunc counter) (secFunc counter)))
+      (/ (real (firstFunc counter)) 
+         (real (+ (secFunc counter) 
+                  (mys-iter (+ counter 1) countTo firstFunc secFunc))))))
+
+(define (mystery numTerms augEnd f g)
+   (+ augEnd (real (mys-iter 1 numTerms f g))))
+
 
 (define (run1) 
    (println "And and my-and behave differently when using the function to check")
@@ -212,9 +218,11 @@
    (exprTest (bico 4 3) 4)
    )
 
-;(define (run6) 
-   
-;   )
+(define (run6) 
+   (define (f a b c d) (+ a b c d))
+
+   (exprTest ((((curry f 1) 2) 3) 4) (f 1 2 3 4))
+   )
 
 (define (run7) 
    (exprTest (zorp 0 (lambda (n) (+ (^ n 3) (^ n 2) n))) 0)
@@ -230,7 +238,7 @@
 ;(define (mystery numTerms augend (genNum n) (genDenom n)))
 
 (define (run9) 
-   (exprTest (mystery 3 2 (lambda (n) 1) (labmda (n) n)) "no clue")
+   (exprTest (mystery 1000 2 (lambda (n) 1) (lambda (n) n)) 2.6977746580)
    )
 
 (define (ramanujan depth))
@@ -243,12 +251,12 @@
 ;(author)
 ;(run1)
 ;(run2)
-(run3)
+;(run3)
 ;(run4)
 ;(run5)
 ;(run6)
 ;(run7)
-(run8)
+;(run8)
 ;(run9)
 ;(run10)
 
